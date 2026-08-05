@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services & Packages - Yusmad Catering</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gold: #D4AF37;
+            --gold-light: #F0D060;
+            --gold-dark: #8B7322;
+            --black: #0A0A0A;
+            --black-light: #1A1A1A;
+            --white: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Navbar */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 15px 5%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--gold);
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .lang-switch {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--gold);
+        }
+
+        /* Page Header */
+        .page-header {
+            height: 50vh;
+            background: linear-gradient(rgba(10, 10, 10, 0.6), rgba(10, 10, 10, 0.8)), url('https://picsum.photos/1920/600?random=30') center/cover no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            margin-top: 70px;
+        }
+
+        .page-header h1 {
+            font-size: 4rem;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        section {
+            padding: 80px 5%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 3rem;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+
+        .section-title p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+        }
+
+        /* Pricing Cards */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .price-card {
+            background: rgba(26, 26, 26, 0.6);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(212, 175, 55, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .price-card.featured {
+            border-color: var(--gold);
+            transform: scale(1.05);
+        }
+
+        .price-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--gold);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.3);
+        }
+
+        .price-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--gold);
+            color: var(--black);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .price-card h3 {
+            font-size: 2rem;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .price {
+            font-size: 3rem;
+            color: var(--white);
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .price span {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .price-features {
+            list-style: none;
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .price-features li {
+            padding: 12px 0;
+            color: rgba(255, 255, 255, 0.8);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        .price-features li i {
+            color: var(--gold);
+            margin-right: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: var(--black);
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Service Details */
+        .services-detail {
+            background: var(--black-light);
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .service-item {
+            background: rgba(26, 26, 26, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .service-item:hover {
+            transform: translateY(-10px);
+            border-color: var(--gold);
+        }
+
+        .service-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .service-content {
+            padding: 30px;
+        }
+
+        .service-content h3 {
+            font-size: 1.8rem;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        .service-content p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .service-content ul {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .service-content ul li {
+            padding: 8px 0;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .service-content ul li i {
+            color: var(--gold);
+            margin-right: 10px;
+        }
+
+        /* Comparison Table */
+        .comparison-section {
+            background: var(--black);
+        }
+
+        .comparison-table {
+            max-width: 1200px;
+            margin: 0 auto;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(26, 26, 26, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        thead {
+            background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+        }
+
+        th {
+            padding: 20px;
+            color: var(--black);
+            font-weight: bold;
+            text-align: left;
+        }
+
+        td {
+            padding: 20px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        td i.fa-check {
+            color: var(--gold);
+            font-size: 1.2rem;
+        }
+
+        td i.fa-times {
+            color: #666;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            background: var(--black-light);
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: rgba(26, 26, 26, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .faq-item:hover {
+            border-color: var(--gold);
+        }
+
+        .faq-question {
+            padding: 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(26, 26, 26, 0.8);
+        }
+
+        .faq-question h3 {
+            font-size: 1.2rem;
+            color: var(--gold);
+        }
+
+        .faq-question i {
+            color: var(--gold);
+            transition: transform 0.3s;
+        }
+
+        .faq-question.active i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s, padding 0.3s;
+            padding: 0 25px;
+        }
+
+        .faq-answer.active {
+            max-height: 500px;
+            padding: 25px;
+        }
+
+        .faq-answer p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--black-light);
+            padding: 60px 5% 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 2;
+            text-decoration: none;
+            display: block;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--gold);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            width: 40px;
+            height: 40px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--gold);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .floating-btn {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 999;
+        }
+
+        .whatsapp-btn {
+            bottom: 30px;
+            right: 30px;
+            background: #25D366;
+            color: white;
+        }
+
+        .back-to-top {
+            bottom: 100px;
+            right: 30px;
+            background: var(--gold);
+            color: var(--black);
+            opacity: 0;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: var(--black-light);
+                flex-direction: column;
+                padding: 100px 30px;
+                transition: right 0.3s;
+            }
+            .nav-links.active { right: 0; }
+            .page-header h1 { font-size: 2.5rem; }
+            .section-title h2 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">Yusmad Catering</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="services.html" class="active">Services</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="signup.html">Sign Up</a></li>
+        </ul>
+        <div class="nav-right">
+            <button class="lang-switch">EN</button>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <section class="page-header">
+        <h1 data-aos="fade-down">Our Services & Packages</h1>
+    </section>
+
+    <!-- Pricing Packages -->
+    <section>
+        <div class="section-title" data-aos="fade-up">
+            <h2>Catering Packages</h2>
+            <p>Choose the perfect package for your event</p>
+        </div>
+        <div class="pricing-grid">
+            <div class="price-card" data-aos="zoom-in" data-aos-delay="100">
+                <h3>Basic Package</h3>
+                <div class="price">RM 1,500<span> / event</span></div>
+                <p style="color: rgba(255,255,255,0.6); margin-bottom: 20px;">Up to 50 guests</p>
+                <ul class="price-features">
+                    <li><i class="fas fa-check"></i> 3 Main Dishes</li>
+                    <li><i class="fas fa-check"></i> 2 Side Dishes</li>
+                    <li><i class="fas fa-check"></i> Rice & Bread</li>
+                    <li><i class="fas fa-check"></i> Drinks (Juice & Water)</li>
+                    <li><i class="fas fa-check"></i> Basic Table Setup</li>
+                    <li><i class="fas fa-check"></i> 2 Service Staff</li>
+                </ul>
+                <a href="booking.html" class="btn-primary">Book Now</a>
+            </div>
+
+            <div class="price-card" data-aos="zoom-in" data-aos-delay="200">
+                <h3>Standard Package</h3>
+                <div class="price">RM 3,000<span> / event</span></div>
+                <p style="color: rgba(255,255,255,0.6); margin-bottom: 20px;">Up to 100 guests</p>
+                <ul class="price-features">
+                    <li><i class="fas fa-check"></i> 5 Main Dishes</li>
+                    <li><i class="fas fa-check"></i> 3 Side Dishes</li>
+                    <li><i class="fas fa-check"></i> Rice, Bread & Pasta</li>
+                    <li><i class="fas fa-check"></i> Drinks & Desserts</li>
+                    <li><i class="fas fa-check"></i> Elegant Table Setup</li>
+                    <li><i class="fas fa-check"></i> 4 Service Staff</li>
+                    <li><i class="fas fa-check"></i> Basic Decoration</li>
+                </ul>
+                <a href="booking.html" class="btn-primary">Book Now</a>
+            </div>
+
+            <div class="price-card featured" data-aos="zoom-in" data-aos-delay="300">
+                <span class="price-badge">POPULAR</span>
+                <h3>Premium Package</h3>
+                <div class="price">RM 6,000<span> / event</span></div>
+                <p style="color: rgba(255,255,255,0.6); margin-bottom: 20px;">Up to 200 guests</p>
+                <ul class="price-features">
+                    <li><i class="fas fa-check"></i> 7 Main Dishes (Premium)</li>
+                    <li><i class="fas fa-check"></i> 4 Side Dishes</li>
+                    <li><i class="fas fa-check"></i> Multiple Carbs Options</li>
+                    <li><i class="fas fa-check"></i> Premium Drinks & Desserts</li>
+                    <li><i class="fas fa-check"></i> Luxury Table Setup</li>
+                    <li><i class="fas fa-check"></i> 6 Service Staff</li>
+                    <li><i class="fas fa-check"></i> Premium Decoration</li>
+                    <li><i class="fas fa-check"></i> Live Cooking Station</li>
+                </ul>
+                <a href="booking.html" class="btn-primary">Book Now</a>
+            </div>
+
+            <div class="price-card" data-aos="zoom-in" data-aos-delay="400">
+                <h3>Luxury Package</h3>
+                <div class="price">RM 12,000<span> / event</span></div>
+                <p style="color: rgba(255,255,255,0.6); margin-bottom: 20px;">Up to 500 guests</p>
+                <ul class="price-features">
+                    <li><i class="fas fa-check"></i> 10+ Gourmet Dishes</li>
+                    <li><i class="fas fa-check"></i> 5 Premium Side Dishes</li>
+                    <li><i class="fas fa-check"></i> International Cuisine</li>
+                    <li><i class="fas fa-check"></i> Premium Beverages & Dessert Bar</li>
+                    <li><i class="fas fa-check"></i> Luxury Table & Hall Setup</li>
+                    <li><i class="fas fa-check"></i> 10+ Service Staff</li>
+                    <li><i class="fas fa-check"></i> Complete Event Decoration</li>
+                    <li><i class="fas fa-check"></i> Multiple Live Stations</li>
+                    <li><i class="fas fa-check"></i> Event Coordinator</li>
+                </ul>
+                <a href="booking.html" class="btn-primary">Book Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Details -->
+    <section class="services-detail" id="wedding">
+        <div class="section-title" data-aos="fade-up">
+            <h2>Our Catering Services</h2>
+            <p>Specialized catering for every occasion</p>
+        </div>
+        <div class="service-grid">
+            <div class="service-item" data-aos="fade-up" data-aos-delay="100">
+                <img src="https://picsum.photos/400/250?random=31" alt="Wedding Catering">
+                <div class="service-content">
+                    <h3>Wedding Catering</h3>
+                    <p>Make your special day unforgettable with our exquisite wedding catering services.</p>
+                    <ul>
+                        <li><i class="fas fa-star"></i> Custom Wedding Menus</li>
+                        <li><i class="fas fa-star"></i> Traditional & Modern Cuisine</li>
+                        <li><i class="fas fa-star"></i> Cake & Dessert Tables</li>
+                        <li><i class="fas fa-star"></i> Complete Setup & Decoration</li>
+                    </ul>
+                    <a href="booking.html" class="btn-primary">Book Wedding Catering</a>
+                </div>
+            </div>
+
+            <div class="service-item" data-aos="fade-up" data-aos-delay="200" id="birthday">
+                <img src="https://picsum.photos/400/250?random=32" alt="Birthday Events">
+                <div class="service-content">
+                    <h3>Birthday Events</h3>
+                    <p>Celebrate life's milestones with delicious food and beautiful presentation.</p>
+                    <ul>
+                        <li><i class="fas fa-star"></i> Kids & Adult Parties</li>
+                        <li><i class="fas fa-star"></i> Themed Decorations</li>
+                        <li><i class="fas fa-star"></i> Custom Birthday Cakes</li>
+                        <li><i class="fas fa-star"></i> Party Games & Activities</li>
+                    </ul>
+                    <a href="booking.html" class="btn-primary">Book Birthday Catering</a>
+                </div>
+            </div>
+
+            <div class="service-item" data-aos="fade-up" data-aos-delay="300" id="corporate">
+                <img src="https://picsum.photos/400/250?random=33" alt="Corporate Events">
+                <div class="service-content">
+                    <h3>Corporate Events</h3>
+                    <p>Impress your clients and colleagues with professional catering services.</p>
+                    <ul>
+                        <li><i class="fas fa-star"></i> Business Meetings</li>
+                        <li><i class="fas fa-star"></i> Conference Catering</li>
+                        <li><i class="fas fa-star"></i> Team Building Events</li>
+                        <li><i class="fas fa-star"></i> Product Launches</li>
+                    </ul>
+                    <a href="booking.html" class="btn-primary">Book Corporate Catering</a>
+                </div>
+            </div>
+
+            <div class="service-item" data-aos="fade-up" data-aos-delay="400" id="outdoor">
+                <img src="https://picsum.photos/400/250?random=34" alt="Outdoor Catering">
+                <div class="service-content">
+                    <h3>Outdoor Catering</h3>
+                    <p>Perfect outdoor dining experiences with our mobile catering solutions.</p>
+                    <ul>
+                        <li><i class="fas fa-star"></i> BBQ & Picnic Events</li>
+                        <li><i class="fas fa-star"></i> Garden Parties</li>
+                        <li><i class="fas fa-star"></i> Beach Events</li>
+                        <li><i class="fas fa-star"></i> Mobile Kitchen Setup</li>
+                    </ul>
+                    <a href="booking.html" class="btn-primary">Book Outdoor Catering</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Table -->
+    <section class="comparison-section">
+        <div class="section-title" data-aos="fade-up">
+            <h2>Package Comparison</h2>
+            <p>Find the right package for your needs</p>
+        </div>
+        <div class="comparison-table" data-aos="fade-up">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Features</th>
+                        <th>Basic</th>
+                        <th>Standard</th>
+                        <th>Premium</th>
+                        <th>Luxury</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Number of Guests</td>
+                        <td>Up to 50</td>
+                        <td>Up to 100</td>
+                        <td>Up to 200</td>
+                        <td>Up to 500</td>
+                    </tr>
+                    <tr>
+                        <td>Main Dishes</td>
+                        <td>3</td>
+                        <td>5</td>
+                        <td>7</td>
+                        <td>10+</td>
+                    </tr>
+                    <tr>
+                        <td>Live Cooking Station</td>
+                        <td><i class="fas fa-times"></i></td>
+                        <td><i class="fas fa-times"></i></td>
+                        <td><i class="fas fa-check"></i></td>
+                        <td><i class="fas fa-check"></i></td>
+                    </tr>
+                    <tr>
+                        <td>Event Coordinator</td>
+                        <td><i class="fas fa-times"></i></td>
+                        <td><i class="fas fa-times"></i></td>
+                        <td><i class="fas fa-times"></i></td>
+                        <td><i class="fas fa-check"></i></td>
+                    </tr>
+                    <tr>
+                        <td>Decoration</td>
+                        <td><i class="fas fa-times"></i></td>
+                        <td>Basic</td>
+                        <td>Premium</td>
+                        <td>Luxury</td>
+                    </tr>
+                    <tr>
+                        <td>Service Staff</td>
+                        <td>2</td>
+                        <td>4</td>
+                        <td>6</td>
+                        <td>10+</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section">
+        <div class="section-title" data-aos="fade-up">
+            <h2>Frequently Asked Questions</h2>
+            <p>Everything you need to know</p>
+        </div>
+        <div class="faq-container">
+            <div class="faq-item" data-aos="fade-up" data-aos-delay="100">
+                <div class="faq-question">
+                    <h3>How far in advance should I book?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>We recommend booking at least 2-3 months in advance for large events like weddings. For smaller events, 2-4 weeks notice is usually sufficient. However, we can accommodate last-minute bookings subject to availability.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
+                <div class="faq-question">
+                    <h3>Can I customize the menu?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Absolutely! We offer fully customizable menus to suit your preferences, dietary requirements, and cultural traditions. Our chefs will work with you to create the perfect menu for your event.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" data-aos="fade-up" data-aos-delay="300">
+                <div class="faq-question">
+                    <h3>Are all your dishes halal certified?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes, all our ingredients and preparation processes are halal-certified. We understand the importance of halal food to our Muslim clients and ensure strict compliance with halal standards.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" data-aos="fade-up" data-aos-delay="400">
+                <div class="faq-question">
+                    <h3>What is your cancellation policy?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Cancellations made 30 days before the event receive a full refund. Cancellations made 15-29 days before receive 50% refund. Cancellations within 14 days are non-refundable. We recommend event insurance for protection.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" data-aos="fade-up" data-aos-delay="500">
+                <div class="faq-question">
+                    <h3>Do you provide equipment and setup?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes! All packages include complete equipment, table setup, and service staff. Premium and Luxury packages also include decoration. We handle everything from setup to cleanup.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" data-aos="fade-up" data-aos-delay="600">
+                <div class="faq-question">
+                    <h3>Can you cater to dietary restrictions?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Certainly! We can accommodate vegetarian, vegan, gluten-free, and other dietary requirements. Please inform us during booking so we can prepare suitable options.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Yusmad Catering</h3>
+                <p>Creating unforgettable culinary experiences for over 15 years.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="index.html">Home</a>
+                <a href="about.html">About Us</a>
+                <a href="services.html">Services</a>
+                <a href="gallery.html">Gallery</a>
+            </div>
+            <div class="footer-section">
+                <h3>Services</h3>
+                <a href="services.html">Wedding Catering</a>
+                <a href="services.html">Birthday Events</a>
+                <a href="services.html">Corporate Events</a>
+                <a href="services.html">Outdoor Catering</a>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Kuala Lumpur, Malaysia</p>
+                <p><i class="fas fa-phone"></i> +60123456789</p>
+                <p><i class="fas fa-envelope"></i> info@yusmadcatering.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Yusmad Catering Services. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/60123456789" class="floating-btn whatsapp-btn" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+    <div class="floating-btn back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        hamburger.addEventListener('click', () => navLinks.classList.toggle('active'));
+
+        const languages = ['EN', 'MS', 'AR'];
+        let currentLang = 0;
+        document.querySelector('.lang-switch').addEventListener('click', function() {
+            currentLang = (currentLang + 1) % languages.length;
+            this.textContent = languages[currentLang];
+        });
+
+        // FAQ Accordion
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                question.classList.toggle('active');
+                const answer = question.nextElementSibling;
+                answer.classList.toggle('active');
+            });
+        });
+
+        // Back to Top
+        const backToTop = document.querySelector('.back-to-top');
+        window.addEventListener('scroll', () => {
+            backToTop.style.opacity = window.scrollY > 300 ? '1' : '0';
+            backToTop.style.visibility = window.scrollY > 300 ? 'visible' : 'hidden';
+        });
+        backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    </script>
+</body>
+</html>

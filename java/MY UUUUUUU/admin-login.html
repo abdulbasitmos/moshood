@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Yusmad Catering</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --gold: #D4AF37;
+            --gold-light: #F0D060;
+            --black: #0A0A0A;
+            --black-light: #1A1A1A;
+            --white: #FFFFFF;
+        }
+        body {
+            font-family: 'Lato', sans-serif;
+            background: linear-gradient(135deg, var(--black), var(--black-light));
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+        .login-container {
+            background: rgba(26, 26, 26, 0.8);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 20px;
+            padding: 50px;
+            max-width: 450px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.2);
+        }
+        .admin-badge {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: var(--black);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        .logo {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 10px;
+        }
+        h2 {
+            text-align: center;
+            color: var(--white);
+            margin-bottom: 30px;
+            font-family: 'Playfair Display', serif;
+        }
+        .back-home {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .back-home a {
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        label {
+            display: block;
+            color: var(--gold);
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 15px;
+            background: rgba(10, 10, 10, 0.6);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 10px;
+            color: var(--white);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        input:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+        }
+        .error-message {
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid #f44336;
+            color: #f44336;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+            text-align: center;
+        }
+        .error-message.active {
+            display: block;
+        }
+        .default-creds {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--gold);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .default-creds p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+        .default-creds strong {
+            color: var(--gold);
+        }
+        .btn-submit {
+            width: 100%;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: var(--black);
+            padding: 15px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        }
+        .user-login-link {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        .user-login-link a {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="back-home">
+            <a href="index.html"><i class="fas fa-arrow-left"></i> Back to Home</a>
+        </div>
+        <div style="text-align: center;">
+            <span class="admin-badge"><i class="fas fa-shield-alt"></i> ADMIN ACCESS</span>
+        </div>
+        <div class="logo">Yusmad Catering</div>
+        <h2>Admin Login</h2>
+        
+        <div class="default-creds">
+            <p><strong>Default Admin Credentials:</strong></p>
+            <p>Email: admin@yusmad.com</p>
+            <p>Password: Admin@2024</p>
+        </div>
+        
+        <div class="error-message" id="errorMessage">
+            Invalid admin credentials
+        </div>
+        
+        <form id="adminLoginForm">
+            <div class="form-group">
+                <label for="email">Admin Email</label>
+                <input type="email" id="email" required placeholder="admin@yusmad.com" value="admin@yusmad.com">
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Admin Password</label>
+                <input type="password" id="password" required placeholder="Enter admin password" value="Admin@2024">
+            </div>
+            
+            <button type="submit" class="btn-submit">
+                <i class="fas fa-lock"></i> Login to Admin Panel
+            </button>
+        </form>
+        
+        <div class="user-login-link">
+            <a href="login.html">User Login</a>
+        </div>
+    </div>
+
+    <script>
+        // Check if already logged in
+        const adminSession = sessionStorage.getItem('yusmad_admin');
+        if (adminSession) {
+            window.location.href = 'admin-dashboard.html';
+        }
+
+        // Initialize admin credentials if not exists
+        if (!localStorage.getItem('yusmad_admin')) {
+            localStorage.setItem('yusmad_admin', JSON.stringify({
+                email: 'admin@yusmad.com',
+                password: btoa('Admin@2024')
+            }));
+        }
+
+        document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            
+            // Get admin credentials
+            const adminCreds = JSON.parse(localStorage.getItem('yusmad_admin'));
+            
+            // Validate
+            if (email === adminCreds.email && btoa(password) === adminCreds.password) {
+                // Set admin session
+                sessionStorage.setItem('yusmad_admin', JSON.stringify({
+                    email: email,
+                    role: 'admin'
+                }));
+                
+                // Redirect to admin dashboard
+                window.location.href = 'admin-dashboard.html';
+            } else {
+                document.getElementById('errorMessage').classList.add('active');
+                setTimeout(() => {
+                    document.getElementById('errorMessage').classList.remove('active');
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>

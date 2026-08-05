@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elite Developer Portfolio | Dynamic & Mad Animations</title>
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+  <link rel="stylesheet" href="./style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================
+       BUILT-IN STYLES (GUARANTEED TO SHOW)
+       ============================================ */
+
+    :root {
+      --neon-cyan:   #00f0ff;
+      --neon-pink:   #ff003c;
+      --neon-purple: #7000ff;
+      --glass-bg:    rgba(10, 10, 20, 0.55);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: #030305;
+      color: #fff;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ========= PRELOADER ========= */
+    #preloader {
+      position: fixed;
+      inset: 0;
+      background: #030305;
+      z-index: 99999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+    }
+    .loader-ring {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      border: 4px solid transparent;
+      border-top-color: var(--neon-cyan);
+      border-right-color: var(--neon-pink);
+      animation: spinRing 1s linear infinite;
+    }
+    @keyframes spinRing { to { transform: rotate(360deg); } }
+
+    .loader-txt {
+      font-size: 1.8rem;
+      font-weight: 900;
+      letter-spacing: 12px;
+      color: transparent;
+      -webkit-text-stroke: 1px var(--neon-cyan);
+      position: relative;
+      overflow: hidden;
+    }
+    .loader-txt::before {
+      content: "LOADING";
+      position: absolute; inset: 0;
+      color: var(--neon-cyan);
+      width: 0;
+      overflow: hidden;
+      animation: loadFill 2.2s ease-in-out forwards;
+    }
+    @keyframes loadFill { to { width: 100%; } }
+
+    .loader-bar-wrap {
+      width: 260px; height: 4px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 99px; overflow: hidden;
+    }
+    .loader-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink), var(--neon-purple));
+      border-radius: 99px;
+      animation: barGrow 2.4s ease-out forwards;
+    }
+    @keyframes barGrow { from { width: 0%; } to { width: 100%; } }
+
+    /* ========= CANVAS ========= */
+    #dynamic-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100vw; height: 100vh;
+      z-index: -2;
+      pointer-events: none;
+      background: radial-gradient(ellipse at 30% 40%, #12002e 0%, #030305 70%);
+    }
+
+    /* ========= GLOWING ORBS (CSS, no JS needed) ========= */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0.35;
+      animation: orbFloat 12s ease-in-out infinite alternate;
+    }
+    .orb1 { width: 500px; height: 500px; background: var(--neon-purple); top: -100px; left: -100px; animation-delay: 0s; }
+    .orb2 { width: 400px; height: 400px; background: var(--neon-pink); bottom: -100px; right: -100px; animation-delay: -5s; }
+    .orb3 { width: 300px; height: 300px; background: var(--neon-cyan); top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: -9s; }
+
+    @keyframes orbFloat {
+      0%   { transform: translate(0, 0) scale(1); }
+      50%  { transform: translate(60px, 40px) scale(1.1); }
+      100% { transform: translate(-40px, 60px) scale(0.9); }
+    }
+
+    /* ========= CUSTOM CURSOR ========= */
+    .cursor-dot, .cursor-ring {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 99998;
+      transform: translate(-50%, -50%);
+    }
+    .cursor-dot {
+      width: 8px; height: 8px;
+      background: var(--neon-cyan);
+      box-shadow: 0 0 12px var(--neon-cyan), 0 0 25px var(--neon-cyan);
+      transition: width .2s, height .2s;
+    }
+    .cursor-ring {
+      width: 42px; height: 42px;
+      border: 2px solid rgba(0, 240, 255, 0.5);
+      box-shadow: 0 0 12px rgba(0,240,255,.2);
+      transition: width .25s, height .25s, border-color .25s, box-shadow .25s;
+    }
+    .cursor-ring.hovered {
+      width: 70px; height: 70px;
+      border-color: var(--neon-pink);
+      box-shadow: 0 0 25px var(--neon-pink), inset 0 0 10px rgba(255,0,60,.1);
+    }
+
+    /* ========= NAVBAR ========= */
+    .navbar {
+      background: rgba(3, 3, 5, 0.7) !important;
+      backdrop-filter: blur(28px) saturate(180%);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 18px 0 !important;
+    }
+    .navbar-brand {
+      font-weight: 900;
+      font-size: 1.6rem;
+      letter-spacing: 4px;
+      background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent !important;
+      text-shadow: none;
+      filter: drop-shadow(0 0 8px var(--neon-cyan));
+    }
+    .nav-link {
+      color: rgba(255,255,255,0.75) !important;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-size: .85rem;
+      margin: 0 12px;
+      position: relative;
+      cursor: none;
+      transition: color .3s;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      left: 50%; bottom: -4px;
+      width: 0; height: 2px;
+      background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink));
+      border-radius: 99px;
+      transition: width .35s ease, left .35s ease;
+    }
+    .nav-link:hover { color: #fff !important; }
+    .nav-link:hover::after { width: 100%; left: 0; }
+
+    /* ========= HERO SECTION ========= */
+    #home { padding-top: 110px; }
+
+    .hero-tag {
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 99px;
+      border: 1px solid rgba(0,240,255,.35);
+      color: var(--neon-cyan);
+      font-size: .85rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+      background: rgba(0,240,255,0.07);
+    }
+
+    .hero-title {
+      font-size: clamp(2.4rem, 6vw, 5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+    .hero-title .static { color: #fff; }
+    .hero-title .typed-text {
+      background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink), var(--neon-purple));
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: textGradient 4s linear infinite;
+    }
+    @keyframes textGradient {
+      0%   { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+
+    /* ========= GLASS CARD ========= */
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 28px;
+      padding: 50px 44px;
+      margin-bottom: 50px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.7);
+      transform-style: preserve-3d;
+      transition: box-shadow .5s ease;
+    }
+
+    /* Animated gradient border on hover */
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: -2px; left: -2px; right: -2px; bottom: -2px;
+      border-radius: 30px;
+      z-index: -1;
+      background: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink), var(--neon-purple), var(--neon-cyan));
+      background-size: 400%;
+      animation: borderSpin 8s linear infinite;
+      opacity: 0;
+      transition: opacity .5s ease;
+    }
+    .glass-card:hover::before { opacity: 1; }
+    @keyframes borderSpin {
+      0%   { background-position: 0 0; }
+      50%  { background-position: 400% 0; }
+      100% { background-position: 0 0; }
+    }
+
+    /* Shimmer sweep on hover */
+    .glass-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -150%;
+      width: 60%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent);
+      transform: skewX(-20deg);
+      transition: left .9s cubic-bezier(.19,1,.22,1);
+    }
+    .glass-card:hover::after { left: 200%; }
+
+    /* ========= SECTION TITLES ========= */
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink), var(--neon-purple), var(--neon-cyan));
+      background-size: 300% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: textGradient 5s linear infinite;
+      margin-bottom: 8px;
+    }
+    .section-subtitle {
+      color: rgba(255,255,255,0.45);
+      font-size: 1rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 40px;
+    }
+
+    /* ========= FLOATING HERO IMAGE ========= */
+    .floating-img {
+      animation: floatUpDown 7s ease-in-out infinite;
+      border-radius: 24px;
+      box-shadow: 0 30px 60px rgba(0,240,255,0.15), 0 0 40px rgba(112,0,255,0.1);
+    }
+    @keyframes floatUpDown {
+      0%   { transform: translateY(0) scale(1); filter: drop-shadow(0 20px 30px rgba(0,240,255,.2)); }
+      50%  { transform: translateY(-22px) scale(1.02); filter: drop-shadow(0 40px 50px rgba(255,0,60,.25)); }
+      100% { transform: translateY(0) scale(1); filter: drop-shadow(0 20px 30px rgba(0,240,255,.2)); }
+    }
+
+    /* ========= SKILL PILLS ========= */
+    .skill-pill {
+      display: inline-block;
+      padding: 8px 20px;
+      border-radius: 99px;
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.8);
+      font-size: .9rem;
+      margin: 6px 4px;
+      background: rgba(255,255,255,0.04);
+      transition: all .35s ease;
+      cursor: none;
+    }
+    .skill-pill:hover {
+      border-color: var(--neon-cyan);
+      color: var(--neon-cyan);
+      box-shadow: 0 0 15px rgba(0,240,255,.3);
+      transform: translateY(-3px);
+    }
+
+    /* ========= STATS ROW ========= */
+    .stat-box {
+      text-align: center;
+      padding: 30px 20px;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 20px;
+      background: rgba(255,255,255,0.02);
+      transition: all .4s ease;
+    }
+    .stat-box:hover {
+      border-color: rgba(0,240,255,.4);
+      box-shadow: 0 0 30px rgba(0,240,255,.15);
+      transform: translateY(-6px);
+    }
+    .stat-num {
+      font-size: 3rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .stat-label { font-size: .85rem; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 2px; }
+
+    /* ========= PORTFOLIO CARD ========= */
+    .portfolio-item {
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      cursor: none;
+    }
+    .portfolio-item img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      transition: transform .6s cubic-bezier(.165,.84,.44,1);
+    }
+    .portfolio-item:hover img { transform: scale(1.08); }
+    .portfolio-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,.85) 0%, transparent 60%);
+      display: flex;
+      align-items: flex-end;
+      padding: 24px;
+      opacity: 0;
+      transition: opacity .4s ease;
+    }
+    .portfolio-item:hover .portfolio-overlay { opacity: 1; }
+    .portfolio-overlay h4 {
+      font-weight: 900; font-size: 1.3rem;
+      background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    /* ========= BUTTONS ========= */
+    .btn-neon {
+      display: inline-block;
+      padding: 15px 44px;
+      border-radius: 99px;
+      font-weight: 900;
+      font-size: 1rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, var(--neon-purple), var(--neon-cyan));
+      color: #fff !important;
+      border: none;
+      box-shadow: 0 12px 35px rgba(112,0,255,.4);
+      transition: all .35s cubic-bezier(.175,.885,.32,1.275);
+      cursor: none;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-neon::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 0; height: 0;
+      background: rgba(255,255,255,.15);
+      border-radius: 50%;
+      transform: translate(-50%,-50%);
+      transition: width .5s ease, height .5s ease;
+    }
+    .btn-neon:hover::before { width: 300px; height: 300px; }
+    .btn-neon:hover {
+      box-shadow: 0 20px 50px rgba(0,240,255,.5), 0 0 40px rgba(112,0,255,.4);
+      transform: translateY(-4px) scale(1.04);
+    }
+
+    /* ========= CONTACT FORM ========= */
+    .form-control {
+      background: rgba(255,255,255,0.04) !important;
+      border: 1px solid rgba(255,255,255,0.1) !important;
+      color: #fff !important;
+      border-radius: 14px !important;
+      padding: 16px 22px !important;
+      margin-bottom: 18px;
+      font-size: 1rem;
+      cursor: none;
+      transition: all .35s ease;
+    }
+    .form-control:focus {
+      background: rgba(255,255,255,0.08) !important;
+      border-color: var(--neon-cyan) !important;
+      box-shadow: 0 0 20px rgba(0,240,255,.25), inset 0 0 10px rgba(0,240,255,.08) !important;
+    }
+    .form-control::placeholder { color: rgba(255,255,255,.3) !important; }
+
+    /* ========= FOOTER ========= */
+    .site-footer {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 50px 0 30px;
+      text-align: center;
+    }
+    .social-link {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.12);
+      color: rgba(255,255,255,.6) !important;
+      margin: 0 8px;
+      font-size: 1.1rem;
+      transition: all .35s ease;
+      cursor: none;
+    }
+    .social-link:hover {
+      border-color: var(--neon-pink);
+      color: var(--neon-pink) !important;
+      box-shadow: 0 0 20px rgba(255,0,60,.35);
+      transform: translateY(-4px) scale(1.12);
+    }
+
+    /* ========= RESPONSIVE ========= */
+    @media(max-width:768px) {
+      .glass-card { padding: 30px 22px; }
+      .hero-title { font-size: 2.2rem; }
+    }
+
+    /* =====================================================
+       NEW CRAZY ANIMATION 1: NEON HIGHWAY SPEED LINES
+       ===================================================== */
+    #speed-section {
+      position: relative;
+      overflow: hidden;
+      padding: 100px 0;
+      background: #010108;
+    }
+    #speed-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 50%, rgba(112,0,255,0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 80% 80%, rgba(0,240,255,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .speed-lines-wrap {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .speed-line {
+      position: absolute;
+      height: 2px;
+      border-radius: 99px;
+      left: -300px;
+      animation: speedZoom linear infinite;
+      transform-origin: left center;
+    }
+    @keyframes speedZoom {
+      0%   { transform: scaleX(0); opacity: 0; left: -10%; }
+      5%   { opacity: 1; }
+      80%  { opacity: 0.9; }
+      100% { transform: scaleX(1); opacity: 0; left: 110%; }
+    }
+
+    /* car card 3d showcase */
+    .car-showcase {
+      display: flex;
+      gap: 28px;
+      justify-content: center;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 2;
+    }
+    .car-card-3d {
+      width: 280px;
+      border-radius: 24px;
+      overflow: hidden;
+      position: relative;
+      transform-style: preserve-3d;
+      cursor: none;
+      transition: box-shadow 0.4s ease;
+      background: rgba(10,10,25,0.7);
+      border: 1px solid rgba(0,240,255,0.15);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+    }
+    .car-card-3d img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s cubic-bezier(.165,.84,.44,1);
+    }
+    .car-card-3d:hover img { transform: scale(1.08); }
+    .car-card-3d-body {
+      padding: 20px;
+    }
+    .car-card-badge {
+      display: inline-block;
+      padding: 4px 14px;
+      border-radius: 99px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .badge-cyan  { background: rgba(0,240,255,0.15);  color: #00f0ff; border: 1px solid rgba(0,240,255,0.3); }
+    .badge-pink  { background: rgba(255,0,60,0.15);   color: #ff003c; border: 1px solid rgba(255,0,60,0.3); }
+    .badge-purp  { background: rgba(112,0,255,0.15);  color: #a855f7; border: 1px solid rgba(112,0,255,0.3); }
+    .car-card-3d h4 {
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .car-card-3d p {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.5);
+      margin: 0;
+    }
+    /* neon underline shimmer on card */
+    .car-card-3d::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink), var(--neon-purple), var(--neon-cyan));
+      background-size: 300%;
+      animation: shimmerBar 3s linear infinite;
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .car-card-3d:hover::after { opacity: 1; }
+    @keyframes shimmerBar {
+      0%   { background-position: 0% 50%; }
+      100% { background-position: 300% 50%; }
+    }
+
+    /* =====================================================
+       NEW CRAZY ANIMATION 2: LIQUID BLOB MORPH (SVG)
+       ===================================================== */
+    #blob-container {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: -1;
+      pointer-events: none;
+      opacity: 0.07;
+      animation: blobPulse 12s ease-in-out infinite alternate;
+    }
+    #blob-container svg path {
+      animation: morphBlob 10s ease-in-out infinite alternate;
+    }
+    @keyframes morphBlob {
+      0%   { d: path("M50,10 C80,0  100,30 90,55 C80,80  55,95  30,85 C5,75   0,50   10,25 C20,0   20,20  50,10 Z"); }
+      25%  { d: path("M45,5  C75,2  105,25 95,55 C85,85  50,100 25,90 C0,80  -5,45   8,20 C21,-5  15,8   45,5  Z"); }
+      50%  { d: path("M55,8  C85,5  100,35 88,60 C76,85  48,98  22,88 C-4,78  -2,48   12,22 C26,-4  25,11  55,8  Z"); }
+      75%  { d: path("M50,12 C82,3  98,32  92,58 C86,84  54,97  28,87 C2,77   2,47   10,22 C18,-3  18,21  50,12 Z"); }
+      100% { d: path("M48,8  C78,0  102,28 92,54 C82,80  52,96  26,86 C0,76   2,46   12,20 C22,-6  18,16  48,8  Z"); }
+    }
+    @keyframes blobPulse {
+      0%   { opacity: 0.06; transform: translate(-50%,-50%) scale(1)   rotate(0deg); }
+      50%  { opacity: 0.10; transform: translate(-50%,-50%) scale(1.15) rotate(30deg); }
+      100% { opacity: 0.06; transform: translate(-50%,-50%) scale(0.9)  rotate(-20deg); }
+    }
+
+    /* =====================================================
+       NEW CRAZY ANIMATION 3: CLICK BURST SPARKS
+       ===================================================== */
+    .click-burst {
+      position: fixed;
+      pointer-events: none;
+      z-index: 99997;
+      width: 0; height: 0;
+    }
+    .burst-particle {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      animation: burstFly 0.75s ease-out forwards;
+    }
+    @keyframes burstFly {
+      0%   { transform: translate(-50%,-50%) scale(1.4); opacity: 1; }
+      100% { transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(0); opacity: 0; }
+    }
+
+    /* =====================================================
+       NEW CRAZY ANIMATION 4: SCROLL PROGRESS LASER BAR
+       ===================================================== */
+    #scroll-laser {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink), var(--neon-purple));
+      z-index: 99996;
+      transition: width 0.1s linear;
+      box-shadow: 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-pink);
+    }
+    #scroll-laser::after {
+      content: '';
+      position: absolute;
+      right: 0; top: 50%;
+      transform: translateY(-50%);
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--neon-pink);
+      box-shadow: 0 0 12px var(--neon-pink), 0 0 24px var(--neon-cyan);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Preloader -->
+  <div id="preloader">
+    <div class="loader-ring"></div>
+    <div class="loader-txt">LOADING</div>
+    <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+  </div>
+
+  <!-- Glowing Orb Backgrounds -->
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+
+  <!-- Scroll Laser Progress Bar -->
+  <div id="scroll-laser"></div>
+
+  <!-- Liquid Blob Morph Background -->
+  <div id="blob-container">
+    <svg width="700" height="700" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="blobGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%"   stop-color="#00f0ff"/>
+          <stop offset="50%"  stop-color="#7000ff"/>
+          <stop offset="100%" stop-color="#ff003c"/>
+        </linearGradient>
+      </defs>
+      <path fill="url(#blobGrad)" d="M50,10 C80,0 100,30 90,55 C80,80 55,95 30,85 C5,75 0,50 10,25 C20,0 20,20 50,10 Z"/>
+    </svg>
+  </div>
+
+  <!-- Custom Cursor -->
+  <div class="cursor-dot"  id="cursor-dot"></div>
+  <div class="cursor-ring" id="cursor-ring"></div>
+
+  <!-- Particle Canvas -->
+  <canvas id="dynamic-canvas"></canvas>
+
+  <!-- ===== NAVBAR ===== -->
+  <header class="fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark" id="nav">
+      <div class="container">
+        <a class="navbar-brand" href="#">NEXUS</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section id="home" class="container">
+    <div class="glass-card" data-tilt data-tilt-max="12" data-tilt-speed="600" data-tilt-perspective="900" data-tilt-glare="true" data-tilt-max-glare="0.35">
+      <div class="row align-items-center">
+        <div class="col-lg-7 mb-5 mb-lg-0" data-aos="fade-right" data-aos-duration="1200">
+          <div class="hero-tag">✦ Available for Projects</div>
+          <h1 class="hero-title">
+            <span class="static d-block">Creative</span>
+            <span class="typed-text" id="typed-hero"></span>
+          </h1>
+          <p class="mt-3 mb-5" style="font-size:1.1rem; color:rgba(255,255,255,0.6); line-height:1.9; max-width:520px;">
+            I craft digital experiences that leave people speechless. Powered by code, fueled by creativity, and designed to make you stand out from the crowd.
+          </p>
+          <a href="#contact" class="btn-neon">Hire Me Now</a>
+          <a href="#portfolio" class="btn-neon ml-3" style="background: transparent; border:1.5px solid rgba(0,240,255,.4); box-shadow: 0 0 20px rgba(0,240,255,.1);">See My Work</a>
+        </div>
+        <div class="col-lg-5 text-center" data-aos="fade-left" data-aos-duration="1400">
+          <img src="best of all time.avif" alt="Hero Image" class="img-fluid floating-img">
+        </div>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="row text-center mb-5" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+      <div class="col-md-4 mb-4">
+        <div class="stat-box">
+          <div class="stat-num" id="count1">0</div>
+          <div class="stat-label">Projects Delivered</div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="stat-box">
+          <div class="stat-num" id="count2">0</div>
+          <div class="stat-label">Happy Clients</div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="stat-box">
+          <div class="stat-num" id="count3">0</div>
+          <div class="stat-label">Awards Won</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section id="about" class="container">
+    <div class="glass-card" data-tilt data-tilt-max="8" data-tilt-speed="600" data-tilt-perspective="900" data-tilt-glare="true" data-tilt-max-glare="0.3">
+      <div class="row align-items-center">
+        <div class="col-lg-5 mb-5 mb-lg-0 text-center" data-aos="zoom-in" data-aos-duration="1200">
+          <img src="main.webp" alt="About" class="img-fluid floating-img" style="border-radius:24px; max-height:400px; object-fit:cover;">
+        </div>
+        <div class="col-lg-7 pl-lg-5" data-aos="fade-left" data-aos-duration="1200">
+          <p class="section-subtitle">Who I Am</p>
+          <h2 class="section-title">About Me</h2>
+          <p style="color:rgba(255,255,255,0.6); font-size:1.05rem; line-height:1.9;">
+            I am a world-class interactive developer who turns impossible designs into breathtaking realities. I specialize in pushing the limits of what CSS and JavaScript can achieve — crafting experiences that recruiters and clients never forget.
+          </p>
+          <div class="mt-4">
+            <span class="skill-pill">HTML5 & CSS3</span>
+            <span class="skill-pill">JavaScript</span>
+            <span class="skill-pill">WebGL</span>
+            <span class="skill-pill">Three.js</span>
+            <span class="skill-pill">GSAP</span>
+            <span class="skill-pill">React</span>
+            <span class="skill-pill">UI/UX Design</span>
+            <span class="skill-pill">Animations</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PORTFOLIO ===== -->
+  <section id="portfolio" class="container">
+    <div class="glass-card" data-tilt data-tilt-max="5" data-tilt-speed="600" data-tilt-perspective="900">
+      <div class="text-center mb-5" data-aos="fade-up">
+        <p class="section-subtitle">What I've Built</p>
+        <h2 class="section-title">Selected Works</h2>
+      </div>
+      <div class="row">
+        <div class="col-md-4 mb-4" data-aos="zoom-in" data-aos-delay="100">
+          <div class="portfolio-item">
+            <img src="car 2.jpg" alt="Project 1">
+            <div class="portfolio-overlay">
+              <div>
+                <h4>Luxury Fleet</h4>
+                <p style="color:rgba(255,255,255,.7); font-size:.85rem; margin:0;">Car Rental Platform</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4" data-aos="zoom-in" data-aos-delay="200">
+          <div class="portfolio-item">
+            <img src="cars 6.jpg" alt="Project 2">
+            <div class="portfolio-overlay">
+              <div>
+                <h4>Speed Collective</h4>
+                <p style="color:rgba(255,255,255,.7); font-size:.85rem; margin:0;">Dynamic Showcase</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4" data-aos="zoom-in" data-aos-delay="300">
+          <div class="portfolio-item">
+            <img src="carrs 1.jpg" alt="Project 3">
+            <div class="portfolio-overlay">
+              <div>
+                <h4>Elite Rides</h4>
+                <p style="color:rgba(255,255,255,.7); font-size:.85rem; margin:0;">Premium Experience</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SPEED ZONE (NEW CRAZY ANIMATION SECTION) ===== -->
+  <section id="speed-section">
+    <!-- Neon speed lines (generated by JS below) -->
+    <div class="speed-lines-wrap" id="speedLinesWrap"></div>
+
+    <div class="container" style="position:relative; z-index:2;">
+      <div class="text-center mb-5" data-aos="fade-up">
+        <p class="section-subtitle" style="color:rgba(0,240,255,0.55);">🚀 Our Fleet</p>
+        <h2 class="section-title">Speed Zone</h2>
+        <p style="color:rgba(255,255,255,0.4); font-size:1rem; max-width:560px; margin:0 auto 50px;">Experience the rush. Every car in our collection is a masterpiece of engineering and style.</p>
+      </div>
+
+      <div class="car-showcase">
+        <!-- Car 1 -->
+        <div class="car-card-3d" data-tilt data-tilt-max="18" data-tilt-speed="500" data-tilt-glare="true" data-tilt-max-glare="0.4" data-aos="zoom-in" data-aos-delay="100">
+          <img src="car 2.jpg" alt="Luxury Car">
+          <div class="car-card-3d-body">
+            <span class="car-card-badge badge-cyan">Luxury</span>
+            <h4>NightRider X9</h4>
+            <p>0–100 km/h in 3.2s &nbsp;·&nbsp; V8 Biturbo</p>
+          </div>
+        </div>
+        <!-- Car 2 -->
+        <div class="car-card-3d" data-tilt data-tilt-max="18" data-tilt-speed="500" data-tilt-glare="true" data-tilt-max-glare="0.4" data-aos="zoom-in" data-aos-delay="200">
+          <img src="cars 6.jpg" alt="Speed Car">
+          <div class="car-card-3d-body">
+            <span class="car-card-badge badge-pink">Sport</span>
+            <h4>Phantom GT-R</h4>
+            <p>0–100 km/h in 2.8s &nbsp;·&nbsp; Twin-Turbo</p>
+          </div>
+        </div>
+        <!-- Car 3 -->
+        <div class="car-card-3d" data-tilt data-tilt-max="18" data-tilt-speed="500" data-tilt-glare="true" data-tilt-max-glare="0.4" data-aos="zoom-in" data-aos-delay="300">
+          <img src="carrs 1.jpg" alt="Elite Car">
+          <div class="car-card-3d-body">
+            <span class="car-card-badge badge-purp">Elite</span>
+            <h4>VoltStorm EV</h4>
+            <p>0–100 km/h in 2.1s &nbsp;·&nbsp; Full Electric</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section id="contact" class="container">
+    <div class="glass-card" data-tilt data-tilt-max="8" data-tilt-speed="600" data-tilt-perspective="900" data-tilt-glare="true" data-tilt-max-glare="0.3">
+      <div class="row align-items-start">
+        <div class="col-lg-6 mb-5 mb-lg-0" data-aos="fade-right" data-aos-duration="1200">
+          <p class="section-subtitle">Let's Work Together</p>
+          <h2 class="section-title">Hire Me.</h2>
+          <p style="color:rgba(255,255,255,0.55); font-size:1rem; line-height:1.9; margin-bottom: 30px;">
+            Ready to build something unforgettable? Fill out the form and let's create magic together. I respond within 24 hours.
+          </p>
+          <div style="color: rgba(255,255,255,.5); font-size: .95rem; line-height: 2.5;">
+            <div><i class="fa fa-envelope mr-2" style="color: var(--neon-cyan);"></i> support@nexusdev.com</div>
+            <div><i class="fa fa-phone mr-2" style="color: var(--neon-pink);"></i> +234 800 123 4567</div>
+            <div><i class="fa fa-map-marker mr-2" style="color: var(--neon-purple);"></i> Port Harcourt, Nigeria</div>
+          </div>
+        </div>
+        <div class="col-lg-6" data-aos="fade-left" data-aos-duration="1200">
+          <form>
+            <input type="text" class="form-control" placeholder="Your Name">
+            <input type="email" class="form-control" placeholder="Your Email">
+            <textarea class="form-control" rows="5" placeholder="Tell me about your project..."></textarea>
+            <button type="submit" class="btn-neon btn-block mt-2">Send Message ✦</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer container">
+    <div class="mb-4">
+      <a href="#" class="social-link"><i class="fa fa-facebook"></i></a>
+      <a href="#" class="social-link"><i class="fa fa-twitter"></i></a>
+      <a href="#" class="social-link"><i class="fa fa-linkedin"></i></a>
+      <a href="#" class="social-link"><i class="fa fa-github"></i></a>
+    </div>
+    <p style="color:rgba(255,255,255,.25); font-size:.85rem;">&copy; 2026 NEXUS Portfolio. Engineered to Win.</p>
+  </footer>
+
+  <!-- ===== SCRIPTS ===== -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+  <script>
+    /* ============================================================
+       ALL JAVASCRIPT — DYNAMIC, INTERACTIVE, CRAZY PROFESSIONAL
+       ============================================================ */
+
+    // --- PRELOADER ---
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const pre = document.getElementById('preloader');
+        pre.style.opacity = '0';
+        pre.style.visibility = 'hidden';
+        setTimeout(() => pre.remove(), 800);
+      }, 2500);
+    });
+
+    // --- AOS INIT ---
+    AOS.init({ once: true, easing: 'ease-out-cubic' });
+
+    // --- TYPED.JS ---
+    new Typed('#typed-hero', {
+      strings: ['Developer.', '3D Animator.', 'UI Perfectionist.', 'Dream Maker.'],
+      typeSpeed: 55,
+      backSpeed: 30,
+      loop: true,
+      backDelay: 1800
+    });
+
+    // --- ANIMATED COUNTER ---
+    function animateCounter(id, target, suffix = '+') {
+      let count = 0;
+      const el = document.getElementById(id);
+      const step = Math.max(1, Math.floor(target / 80));
+      const interval = setInterval(() => {
+        count += step;
+        if (count >= target) { count = target; clearInterval(interval); }
+        el.textContent = count + suffix;
+      }, 20);
+    }
+    const statsObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          animateCounter('count1', 120);
+          animateCounter('count2', 95);
+          animateCounter('count3', 18);
+          statsObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.5 });
+    const statsSection = document.getElementById('count1');
+    if (statsSection) statsObserver.observe(statsSection.closest('.row'));
+
+    // --- CUSTOM CURSOR ---
+    const cursorDot  = document.getElementById('cursor-dot');
+    const cursorRing = document.getElementById('cursor-ring');
+    let ringX = 0, ringY = 0, dotX = 0, dotY = 0;
+
+    document.addEventListener('mousemove', e => {
+      dotX = e.clientX; dotY = e.clientY;
+      cursorDot.style.left = dotX + 'px';
+      cursorDot.style.top  = dotY + 'px';
+    });
+
+    // Smooth ring lag
+    function animateRing() {
+      ringX += (dotX - ringX) * 0.12;
+      ringY += (dotY - ringY) * 0.12;
+      cursorRing.style.left = ringX + 'px';
+      cursorRing.style.top  = ringY + 'px';
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+
+    document.querySelectorAll('a, button, .btn-neon, input, textarea, .portfolio-item, .skill-pill')
+      .forEach(el => {
+        el.addEventListener('mouseenter', () => cursorRing.classList.add('hovered'));
+        el.addEventListener('mouseleave', () => cursorRing.classList.remove('hovered'));
+      });
+
+    // --- PARTICLE NETWORK ---
+    const canvas = document.getElementById('dynamic-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let mouse = { x: null, y: null, radius: 160 };
+    document.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+    document.addEventListener('mouseout',  () => { mouse.x = null; mouse.y = null; });
+
+    class Particle {
+      constructor() { this.reset(); }
+      reset() {
+        this.x  = Math.random() * canvas.width;
+        this.y  = Math.random() * canvas.height;
+        this.vx = (Math.random() - 0.5) * 1.2;
+        this.vy = (Math.random() - 0.5) * 1.2;
+        this.size = Math.random() * 2.5 + 0.5;
+        this.baseX = this.x;
+        this.baseY = this.y;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(0, 240, 255, 0.85)';
+        ctx.fill();
+      }
+      update() {
+        // Mouse repulsion
+        if (mouse.x !== null) {
+          let dx = mouse.x - this.x, dy = mouse.y - this.y;
+          let dist = Math.sqrt(dx*dx + dy*dy);
+          if (dist < mouse.radius) {
+            let force = (mouse.radius - dist) / mouse.radius;
+            this.vx -= (dx / dist) * force * 2;
+            this.vy -= (dy / dist) * force * 2;
+          }
+        }
+        // Damping
+        this.vx *= 0.97;
+        this.vy *= 0.97;
+        this.x += this.vx;
+        this.y += this.vy;
+        // Bounce walls
+        if (this.x < 0 || this.x > canvas.width)  this.vx *= -1;
+        if (this.y < 0 || this.y > canvas.height)  this.vy *= -1;
+        this.draw();
+      }
+    }
+
+    const NUM_PARTICLES = Math.floor((canvas.width * canvas.height) / 8000);
+    let particles = Array.from({ length: NUM_PARTICLES }, () => new Particle());
+
+    function connectParticles() {
+      const maxDist = 140;
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          let dx = particles[i].x - particles[j].x;
+          let dy = particles[i].y - particles[j].y;
+          let d  = Math.sqrt(dx*dx + dy*dy);
+          if (d < maxDist) {
+            ctx.strokeStyle = `rgba(112, 0, 255, ${1 - d/maxDist})`;
+            ctx.lineWidth = 0.8;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function particleLoop() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => p.update());
+      connectParticles();
+      requestAnimationFrame(particleLoop);
+    }
+    particleLoop();
+
+    window.addEventListener('resize', () => {
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
+      particles = Array.from({ length: Math.floor((canvas.width * canvas.height) / 8000) }, () => new Particle());
+    });
+
+    // --- MAGNETIC BUTTONS ---
+    document.querySelectorAll('.btn-neon').forEach(btn => {
+      btn.addEventListener('mousemove', e => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top  - rect.height / 2;
+        btn.style.transform = `translateY(-4px) translate(${x * 0.18}px, ${y * 0.18}px)`;
+      });
+      btn.addEventListener('mouseleave', () => {
+        btn.style.transform = '';
+      });
+    });
+
+    // --- NAVBAR SCROLL EFFECT ---
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('nav');
+      if (window.scrollY > 80) {
+        nav.style.background = 'rgba(3,3,5,0.95)';
+        nav.style.boxShadow  = '0 4px 30px rgba(0,0,0,0.5)';
+      } else {
+        nav.style.background = 'rgba(3,3,5,0.5)';
+        nav.style.boxShadow  = 'none';
+      }
+    });
+  </script>
+
+  <script>
+    /* =====================================================
+       NEW ANIMATIONS SCRIPT
+       ===================================================== */
+
+    // --- SCROLL LASER PROGRESS BAR ---
+    window.addEventListener('scroll', () => {
+      const scrollTop  = window.scrollY || document.documentElement.scrollTop;
+      const docHeight  = document.documentElement.scrollHeight - window.innerHeight;
+      const pct        = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('scroll-laser').style.width = pct + '%';
+    });
+
+    // --- NEON HIGHWAY SPEED LINES ---
+    (function spawnSpeedLines() {
+      const wrap = document.getElementById('speedLinesWrap');
+      if (!wrap) return;
+      const COLORS = ['#00f0ff','#ff003c','#7000ff','#ffffff','#ff9900'];
+      const NUM    = 40;
+      for (let i = 0; i < NUM; i++) {
+        const line = document.createElement('div');
+        line.className = 'speed-line';
+        const topPct  = Math.random() * 100;
+        const dur     = 0.6 + Math.random() * 1.4;   // 0.6–2s
+        const width   = 80  + Math.random() * 220;    // 80–300px
+        const delay   = Math.random() * 2.5;
+        const color   = COLORS[Math.floor(Math.random() * COLORS.length)];
+        const opacity = 0.25 + Math.random() * 0.6;
+        line.style.cssText = [
+          `top: ${topPct}%`,
+          `width: ${width}px`,
+          `background: linear-gradient(90deg, transparent, ${color}, transparent)`,
+          `animation-duration: ${dur}s`,
+          `animation-delay: -${delay}s`,
+          `opacity: ${opacity}`,
+          `box-shadow: 0 0 6px ${color}`,
+        ].join(';');
+        wrap.appendChild(line);
+      }
+    })();
+
+    // --- CLICK BURST SPARKS ---
+    (function initClickBurst() {
+      const BURST_COLORS = ['#00f0ff','#ff003c','#7000ff','#ffcc00','#ff9900','#ffffff'];
+      const NUM_SPARKS = 14;
+      document.addEventListener('click', e => {
+        const burst = document.createElement('div');
+        burst.className = 'click-burst';
+        burst.style.left = e.clientX + 'px';
+        burst.style.top  = e.clientY + 'px';
+        document.body.appendChild(burst);
+
+        for (let i = 0; i < NUM_SPARKS; i++) {
+          const spark = document.createElement('div');
+          spark.className = 'burst-particle';
+          const angle  = (i / NUM_SPARKS) * Math.PI * 2 + (Math.random() - 0.5) * 0.5;
+          const dist   = 50 + Math.random() * 90;
+          const tx     = Math.cos(angle) * dist;
+          const ty     = Math.sin(angle) * dist;
+          const color  = BURST_COLORS[Math.floor(Math.random() * BURST_COLORS.length)];
+          const size   = 5 + Math.random() * 6;
+          spark.style.cssText = [
+            `--tx: ${tx}px`,
+            `--ty: ${ty}px`,
+            `background: ${color}`,
+            `width: ${size}px`,
+            `height: ${size}px`,
+            `box-shadow: 0 0 8px ${color}, 0 0 16px ${color}`,
+            `animation-duration: ${0.5 + Math.random() * 0.4}s`,
+          ].join(';');
+          burst.appendChild(spark);
+        }
+        // Clean up after animation
+        setTimeout(() => burst.remove(), 900);
+      });
+    })();
+
+    // --- REINIT VanillaTilt on new car cards ---
+    if (typeof VanillaTilt !== 'undefined') {
+      VanillaTilt.init(document.querySelectorAll('.car-card-3d[data-tilt]'), {
+        max: 18, speed: 500, glare: true, 'max-glare': 0.4,
+      });
+    }
+  </script>
+</body>
+</html>

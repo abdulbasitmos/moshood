@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard - Yusmad Catering</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --gold: #D4AF37;
+            --gold-light: #F0D060;
+            --black: #0A0A0A;
+            --black-light: #1A1A1A;
+            --white: #FFFFFF;
+        }
+        body {
+            font-family: 'Lato', sans-serif;
+            background: var(--black);
+            color: var(--white);
+        }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+        
+        /* Header */
+        .dashboard-header {
+            background: var(--black-light);
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid rgba(212, 175, 55, 0.2);
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Playfair Display', serif;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .user-name {
+            color: var(--gold);
+            font-weight: bold;
+        }
+        .btn-logout {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-logout:hover {
+            background: var(--gold);
+            color: var(--black);
+        }
+        
+        /* Main Content */
+        .dashboard-main {
+            padding: 40px 5%;
+        }
+        .welcome-section {
+            background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+            color: var(--black);
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+        }
+        .welcome-section h1 {
+            margin-bottom: 10px;
+        }
+        
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .stat-card {
+            background: rgba(26, 26, 26, 0.6);
+            border: 2px solid rgba(212, 175, 55, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .stat-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+        }
+        .stat-card i {
+            font-size: 2.5rem;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+        .stat-card h3 {
+            font-size: 2rem;
+            color: var(--white);
+            margin-bottom: 5px;
+        }
+        .stat-card p {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        /* Action Buttons */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .action-btn {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: var(--black);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .action-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        }
+        
+        /* Profile Section */
+        .profile-section {
+            background: rgba(26, 26, 26, 0.6);
+            border: 2px solid rgba(212, 175, 55, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+        .profile-section h2 {
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+        .profile-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .info-item {
+            padding: 15px;
+            background: rgba(10, 10, 10, 0.4);
+            border-radius: 10px;
+            border-left: 3px solid var(--gold);
+        }
+        .info-item label {
+            color: var(--gold);
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .info-item p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        .btn-edit {
+            margin-top: 20px;
+            background: transparent;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            padding: 12px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .btn-edit:hover {
+            background: var(--gold);
+            color: var(--black);
+        }
+        
+        /* Bookings Section */
+        .bookings-section {
+            background: rgba(26, 26, 26, 0.6);
+            border: 2px solid rgba(212, 175, 55, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+        }
+        .bookings-section h2 {
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+        .booking-table {
+            width: 100%;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        thead {
+            background: rgba(212, 175, 55, 0.1);
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+        }
+        th {
+            color: var(--gold);
+            font-weight: bold;
+        }
+        td {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        .status-badge {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            display: inline-block;
+        }
+        .status-pending {
+            background: rgba(255, 152, 0, 0.2);
+            color: #ff9800;
+            border: 1px solid #ff9800;
+        }
+        .status-confirmed {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+            border: 1px solid #4CAF50;
+        }
+        .status-completed {
+            background: rgba(33, 150, 243, 0.2);
+            color: #2196F3;
+            border: 1px solid #2196F3;
+        }
+        .status-cancelled {
+            background: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+            border: 1px solid #f44336;
+        }
+        .btn-cancel {
+            background: transparent;
+            border: 1px solid #f44336;
+            color: #f44336;
+            padding: 5px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+        .btn-cancel:hover {
+            background: #f44336;
+            color: white;
+        }
+        .no-bookings {
+            text-align: center;
+            padding: 40px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-header {
+                flex-direction: column;
+                gap: 20px;
+            }
+            .booking-table {
+                overflow-x: scroll;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="dashboard-header">
+        <div class="logo">Yusmad Catering</div>
+        <div class="user-info">
+            <span class="user-name" id="userName"></span>
+            <button class="btn-logout" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="dashboard-main">
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <h1>Welcome back, <span id="welcomeName"></span>!</h1>
+            <p>Manage your bookings and profile from your dashboard</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <i class="fas fa-calendar-check"></i>
+                <h3 id="totalBookings">0</h3>
+                <p>Total Bookings</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-clock"></i>
+                <h3 id="upcomingEvents">0</h3>
+                <p>Upcoming Events</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-check-circle"></i>
+                <h3 id="completedEvents">0</h3>
+                <p>Completed Events</p>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <a href="booking.html" class="action-btn">
+                <i class="fas fa-plus"></i> New Booking
+            </a>
+            <a href="index.html" class="action-btn">
+                <i class="fas fa-home"></i> Back to Home
+            </a>
+        </div>
+
+        <!-- Profile Section -->
+        <div class="profile-section">
+            <h2><i class="fas fa-user"></i> My Profile</h2>
+            <div class="profile-info" id="profileInfo">
+                <!-- Profile info will be inserted here -->
+            </div>
+            <button class="btn-edit" onclick="alert('Profile editing coming soon!')">
+                <i class="fas fa-edit"></i> Edit Profile
+            </button>
+        </div>
+
+        <!-- Bookings Section -->
+        <div class="bookings-section">
+            <h2><i class="fas fa-list"></i> My Bookings</h2>
+            <div class="booking-table">
+                <table id="bookingsTable">
+                    <thead>
+                        <tr>
+                            <th>Booking ID</th>
+                            <th>Event Type</th>
+                            <th>Date</th>
+                            <th>Guests</th>
+                            <th>Package</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bookingsBody">
+                        <!-- Bookings will be inserted here -->
+                    </tbody>
+                </table>
+                <div class="no-bookings" id="noBookings" style="display: none;">
+                    <i class="fas fa-calendar-times" style="font-size: 3rem; color: rgba(255,255,255,0.3); margin-bottom: 20px;"></i>
+                    <p>No bookings yet. <a href="booking.html" style="color: var(--gold);">Create your first booking</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check authentication
+        const userData = JSON.parse(sessionStorage.getItem('yusmad_user'));
+        if (!userData) {
+            window.location.href = 'login.html';
+        }
+
+        // Display user info
+        document.getElementById('userName').textContent = userData.fullName;
+        document.getElementById('welcomeName').textContent = userData.fullName.split(' ')[0];
+
+        // Display profile
+        document.getElementById('profileInfo').innerHTML = `
+            <div class="info-item">
+                <label>Full Name</label>
+                <p>${userData.fullName}</p>
+            </div>
+            <div class="info-item">
+                <label>Email</label>
+                <p>${userData.email}</p>
+            </div>
+            <div class="info-item">
+                <label>Phone</label>
+                <p>${userData.phone}</p>
+            </div>
+            <div class="info-item">
+                <label>Member Since</label>
+                <p>${new Date().toLocaleDateString()}</p>
+            </div>
+        `;
+
+        // Load bookings
+        function loadBookings() {
+            const allBookings = JSON.parse(localStorage.getItem('yusmad_bookings') || '[]');
+            const userBookings = allBookings.filter(b => b.userId === userData.id);
+
+            // Update stats
+            document.getElementById('totalBookings').textContent = userBookings.length;
+            const upcoming = userBookings.filter(b => b.status === 'Pending' || b.status === 'Confirmed').length;
+            document.getElementById('upcomingEvents').textContent = upcoming;
+            const completed = userBookings.filter(b => b.status === 'Completed').length;
+            document.getElementById('completedEvents').textContent = completed;
+
+            // Display bookings
+            const tbody = document.getElementById('bookingsBody');
+            const noBookings = document.getElementById('noBookings');
+
+            if (userBookings.length === 0) {
+                tbody.style.display = 'none';
+                noBookings.style.display = 'block';
+                return;
+            }
+
+            tbody.innerHTML = userBookings.map(booking => `
+                <tr>
+                    <td>#${booking.id.slice(-6)}</td>
+                    <td>${booking.eventType}</td>
+                    <td>${new Date(booking.eventDate).toLocaleDateString()}</td>
+                    <td>${booking.guests}</td>
+                    <td>${booking.package}</td>
+                    <td><span class="status-badge status-${booking.status.toLowerCase()}">${booking.status}</span></td>
+                    <td>
+                        ${booking.status === 'Pending' || booking.status === 'Confirmed' ? 
+                            `<button class="btn-cancel" onclick="cancelBooking('${booking.id}')">Cancel</button>` : 
+                            '-'}
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function cancelBooking(bookingId) {
+            if (!confirm('Are you sure you want to cancel this booking?')) return;
+
+            const allBookings = JSON.parse(localStorage.getItem('yusmad_bookings') || '[]');
+            const bookingIndex = allBookings.findIndex(b => b.id === bookingId);
+            
+            if (bookingIndex !== -1) {
+                allBookings[bookingIndex].status = 'Cancelled';
+                localStorage.setItem('yusmad_bookings', JSON.stringify(allBookings));
+                alert('Booking cancelled successfully.');
+                loadBookings();
+            }
+        }
+
+        function logout() {
+            sessionStorage.removeItem('yusmad_user');
+            localStorage.removeItem('yusmad_remember');
+            window.location.href = 'login.html';
+        }
+
+        // Load bookings on page load
+        loadBookings();
+    </script>
+</body>
+</html>

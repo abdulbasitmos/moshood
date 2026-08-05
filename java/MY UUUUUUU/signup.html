@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Yusmad Catering</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --gold: #D4AF37;
+            --gold-light: #F0D060;
+            --gold-dark: #8B7322;
+            --black: #0A0A0A;
+            --black-light: #1A1A1A;
+            --white: #FFFFFF;
+        }
+        body {
+            font-family: 'Lato', sans-serif;
+            background: linear-gradient(135deg, var(--black), var(--black-light));
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+        .signup-container {
+            background: rgba(26, 26, 26, 0.8);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 20px;
+            padding: 50px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.2);
+        }
+        .logo {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 10px;
+        }
+        h2 {
+            text-align: center;
+            color: var(--white);
+            margin-bottom: 30px;
+            font-family: 'Playfair Display', serif;
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        label {
+            display: block;
+            color: var(--gold);
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 15px;
+            background: rgba(10, 10, 10, 0.6);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 10px;
+            color: var(--white);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        input:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+        }
+        .password-strength {
+            height: 5px;
+            background: rgba(212, 175, 55, 0.2);
+            border-radius: 5px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+        .password-strength-bar {
+            height: 100%;
+            width: 0;
+            transition: all 0.3s;
+        }
+        .password-strength-bar.weak {
+            width: 33%;
+            background: #f44336;
+        }
+        .password-strength-bar.medium {
+            width: 66%;
+            background: #ff9800;
+        }
+        .password-strength-bar.strong {
+            width: 100%;
+            background: #4CAF50;
+        }
+        .error-message {
+            color: #f44336;
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: none;
+        }
+        .error-message.active {
+            display: block;
+        }
+        .btn-submit {
+            width: 100%;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: var(--black);
+            padding: 15px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        }
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .login-link a {
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+        .back-home {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .back-home a {
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        @media (max-width: 600px) {
+            .signup-container {
+                padding: 30px 20px;
+            }
+            .logo {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <div class="back-home">
+            <a href="index.html"><i class="fas fa-arrow-left"></i> Back to Home</a>
+        </div>
+        <div class="logo">Yusmad Catering</div>
+        <h2>Create Your Account</h2>
+        <form id="signupForm">
+            <div class="form-group">
+                <label for="fullName">Full Name *</label>
+                <input type="text" id="fullName" required>
+                <span class="error-message" id="nameError">Please enter your full name</span>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" required>
+                <span class="error-message" id="emailError">Please enter a valid email</span>
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Phone Number *</label>
+                <input type="tel" id="phone" required placeholder="+60123456789">
+                <span class="error-message" id="phoneError">Please enter a valid phone number</span>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password *</label>
+                <input type="password" id="password" required>
+                <div class="password-strength">
+                    <div class="password-strength-bar" id="strengthBar"></div>
+                </div>
+                <span class="error-message" id="passwordError">Password must be at least 6 characters</span>
+            </div>
+            
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password *</label>
+                <input type="password" id="confirmPassword" required>
+                <span class="error-message" id="confirmError">Passwords do not match</span>
+            </div>
+            
+            <button type="submit" class="btn-submit">Sign Up</button>
+        </form>
+        
+        <div class="login-link">
+            Already have an account? <a href="login.html">Login here</a>
+        </div>
+    </div>
+
+    <script>
+        // Password strength checker
+        const password = document.getElementById('password');
+        const strengthBar = document.getElementById('strengthBar');
+
+        password.addEventListener('input', () => {
+            const value = password.value;
+            let strength = 0;
+            
+            if (value.length >= 6) strength++;
+            if (value.length >= 8) strength++;
+            if (/[A-Z]/.test(value)) strength++;
+            if (/[0-9]/.test(value)) strength++;
+            if (/[^A-Za-z0-9]/.test(value)) strength++;
+            
+            strengthBar.className = 'password-strength-bar';
+            if (strength <= 2) {
+                strengthBar.classList.add('weak');
+            } else if (strength <= 4) {
+                strengthBar.classList.add('medium');
+            } else {
+                strengthBar.classList.add('strong');
+            }
+        });
+
+        // Form submission
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Reset errors
+            document.querySelectorAll('.error-message').forEach(el => el.classList.remove('active'));
+            
+            // Get form values
+            const fullName = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const pwd = document.getElementById('password').value;
+            const confirmPwd = document.getElementById('confirmPassword').value;
+            
+            let isValid = true;
+            
+            // Validate full name
+            if (fullName.length < 3) {
+                document.getElementById('nameError').classList.add('active');
+                isValid = false;
+            }
+            
+            // Validate email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                document.getElementById('emailError').classList.add('active');
+                isValid = false;
+            }
+            
+            // Validate phone
+            const phoneRegex = /^[+]?[\d\s-()]+$/;
+            if (!phoneRegex.test(phone) || phone.length < 10) {
+                document.getElementById('phoneError').classList.add('active');
+                isValid = false;
+            }
+            
+            // Validate password
+            if (pwd.length < 6) {
+                document.getElementById('passwordError').classList.add('active');
+                isValid = false;
+            }
+            
+            // Validate password match
+            if (pwd !== confirmPwd) {
+                document.getElementById('confirmError').classList.add('active');
+                isValid = false;
+            }
+            
+            if (!isValid) return;
+            
+            // Check if email already exists
+            const users = JSON.parse(localStorage.getItem('yusmad_users') || '[]');
+            const emailExists = users.some(user => user.email === email);
+            
+            if (emailExists) {
+                document.getElementById('emailError').textContent = 'Email already registered';
+                document.getElementById('emailError').classList.add('active');
+                return;
+            }
+            
+            // Create new user
+            const newUser = {
+                id: Date.now().toString(),
+                fullName: fullName,
+                email: email,
+                phone: phone,
+                password: btoa(pwd), // Simple encoding (in production, use proper hashing)
+                createdAt: new Date().toISOString(),
+                status: 'active'
+            };
+            
+            // Save user
+            users.push(newUser);
+            localStorage.setItem('yusmad_users', JSON.stringify(users));
+            
+            // Set session
+            sessionStorage.setItem('yusmad_user', JSON.stringify({
+                id: newUser.id,
+                fullName: newUser.fullName,
+                email: newUser.email,
+                phone: newUser.phone
+            }));
+            
+            // Redirect to dashboard
+            alert('Registration successful! Welcome to Yusmad Catering.');
+            window.location.href = 'dashboard.html';
+        });
+    </script>
+</body>
+</html>

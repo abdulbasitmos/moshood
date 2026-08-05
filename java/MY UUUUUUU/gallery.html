@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - Yusmad Catering</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --gold: #D4AF37;
+            --gold-light: #F0D060;
+            --gold-dark: #8B7322;
+            --black: #0A0A0A;
+            --black-light: #1A1A1A;
+            --white: #FFFFFF;
+        }
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+        }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+        
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 15px 5%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Playfair Display', serif;
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+        .lang-switch {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--gold);
+        }
+        
+        .page-header {
+            height: 50vh;
+            background: linear-gradient(rgba(10, 10, 10, 0.6), rgba(10, 10, 10, 0.8)), url('https://picsum.photos/1920/600?random=40') center/cover no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 70px;
+        }
+        .page-header h1 {
+            font-size: 4rem;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        section { padding: 80px 5%; }
+        
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 50px;
+        }
+        .filter-btn {
+            background: rgba(212, 175, 55, 0.1);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            color: var(--gold);
+            padding: 12px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: var(--gold);
+            color: var(--black);
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            height: 350px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+        .gallery-item:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        .gallery-item .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(10, 10, 10, 0.8), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+            display: flex;
+            align-items: flex-end;
+            padding: 20px;
+        }
+        .gallery-item:hover .overlay {
+            opacity: 1;
+        }
+        .overlay h3 {
+            color: var(--gold);
+            font-size: 1.2rem;
+        }
+        
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        .lightbox.active { display: flex; }
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 3rem;
+            color: var(--gold);
+            cursor: pointer;
+        }
+        
+        footer {
+            background: var(--black-light);
+            padding: 60px 5% 30px;
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        .footer-section h3 { color: var(--gold); margin-bottom: 20px; }
+        .footer-section p, .footer-section a {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 2;
+            text-decoration: none;
+            display: block;
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: var(--black-light);
+                flex-direction: column;
+                padding: 100px 30px;
+                transition: right 0.3s;
+            }
+            .nav-links.active { right: 0; }
+            .page-header h1 { font-size: 2.5rem; }
+            .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">Yusmad Catering</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="gallery.html" class="active">Gallery</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="signup.html">Sign Up</a></li>
+        </ul>
+        <div style="display: flex; gap: 15px; align-items: center;">
+            <button class="lang-switch">EN</button>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <section class="page-header">
+        <h1 data-aos="fade-down">Our Gallery</h1>
+    </section>
+
+    <section>
+        <div class="filter-buttons" data-aos="fade-up">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="wedding">Weddings</button>
+            <button class="filter-btn" data-filter="birthday">Birthdays</button>
+            <button class="filter-btn" data-filter="corporate">Corporate</button>
+            <button class="filter-btn" data-filter="outdoor">Outdoor</button>
+        </div>
+        
+        <div class="gallery-grid">
+            <div class="gallery-item" data-category="wedding" data-aos="zoom-in">
+                <img src="https://picsum.photos/400/350?random=41" alt="Wedding Event">
+                <div class="overlay"><h3>Luxury Wedding</h3></div>
+            </div>
+            <div class="gallery-item" data-category="wedding" data-aos="zoom-in" data-aos-delay="100">
+                <img src="https://picsum.photos/400/350?random=42" alt="Wedding Catering">
+                <div class="overlay"><h3>Wedding Reception</h3></div>
+            </div>
+            <div class="gallery-item" data-category="birthday" data-aos="zoom-in" data-aos-delay="200">
+                <img src="https://picsum.photos/400/350?random=43" alt="Birthday Party">
+                <div class="overlay"><h3>Birthday Celebration</h3></div>
+            </div>
+            <div class="gallery-item" data-category="corporate" data-aos="zoom-in" data-aos-delay="300">
+                <img src="https://picsum.photos/400/350?random=44" alt="Corporate Event">
+                <div class="overlay"><h3>Corporate Lunch</h3></div>
+            </div>
+            <div class="gallery-item" data-category="outdoor" data-aos="zoom-in">
+                <img src="https://picsum.photos/400/350?random=45" alt="Outdoor Catering">
+                <div class="overlay"><h3>Garden Party</h3></div>
+            </div>
+            <div class="gallery-item" data-category="wedding" data-aos="zoom-in" data-aos-delay="100">
+                <img src="https://picsum.photos/400/350?random=46" alt="Wedding Buffet">
+                <div class="overlay"><h3>Wedding Buffet</h3></div>
+            </div>
+            <div class="gallery-item" data-category="birthday" data-aos="zoom-in" data-aos-delay="200">
+                <img src="https://picsum.photos/400/350?random=47" alt="Kids Birthday">
+                <div class="overlay"><h3>Kids Birthday Party</h3></div>
+            </div>
+            <div class="gallery-item" data-category="corporate" data-aos="zoom-in" data-aos-delay="300">
+                <img src="https://picsum.photos/400/350?random=48" alt="Business Meeting">
+                <div class="overlay"><h3>Business Conference</h3></div>
+            </div>
+            <div class="gallery-item" data-category="outdoor" data-aos="zoom-in">
+                <img src="https://picsum.photos/400/350?random=49" alt="Beach Event">
+                <div class="overlay"><h3>Beach Party</h3></div>
+            </div>
+            <div class="gallery-item" data-category="wedding" data-aos="zoom-in" data-aos-delay="100">
+                <img src="https://picsum.photos/400/350?random=50" alt="Wedding Decoration">
+                <div class="overlay"><h3>Wedding Decor</h3></div>
+            </div>
+            <div class="gallery-item" data-category="birthday" data-aos="zoom-in" data-aos-delay="200">
+                <img src="https://picsum.photos/400/350?random=51" alt="Adult Birthday">
+                <div class="overlay"><h3>Adult Birthday</h3></div>
+            </div>
+            <div class="gallery-item" data-category="corporate" data-aos="zoom-in" data-aos-delay="300">
+                <img src="https://picsum.photos/400/350?random=52" alt="Product Launch">
+                <div class="overlay"><h3>Product Launch</h3></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <img src="" alt="Lightbox Image">
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Yusmad Catering</h3>
+                <p>Creating unforgettable culinary experiences for over 15 years.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="index.html">Home</a>
+                <a href="about.html">About Us</a>
+                <a href="services.html">Services</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <p><i class="fas fa-phone"></i> +60123456789</p>
+                <p><i class="fas fa-envelope"></i> info@yusmadcatering.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Yusmad Catering Services. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        hamburger.addEventListener('click', () => navLinks.classList.toggle('active'));
+
+        const languages = ['EN', 'MS', 'AR'];
+        let currentLang = 0;
+        document.querySelector('.lang-switch').addEventListener('click', function() {
+            currentLang = (currentLang + 1) % languages.length;
+            this.textContent = languages[currentLang];
+        });
+
+        // Gallery Filter
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const filter = btn.getAttribute('data-filter');
+                
+                galleryItems.forEach(item => {
+                    if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Lightbox
+        const lightbox = document.querySelector('.lightbox');
+        const lightboxImg = lightbox.querySelector('img');
+        const lightboxClose = document.querySelector('.lightbox-close');
+
+        galleryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const imgSrc = item.querySelector('img').src;
+                lightboxImg.src = imgSrc;
+                lightbox.classList.add('active');
+            });
+        });
+
+        lightboxClose.addEventListener('click', () => {
+            lightbox.classList.remove('active');
+        });
+
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                lightbox.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

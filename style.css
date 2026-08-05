@@ -1,0 +1,227 @@
+/* 
+  ULTIMATE PREMIUM PORTFOLIO AESTHETICS - V2
+  Designed to win the job. Period.
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;900&display=swap');
+
+:root {
+    --primary: #00f0ff;
+    --secondary: #ff003c;
+    --tertiary: #7000ff;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Outfit', sans-serif !important;
+    background-color: #030305;
+    color: #ffffff;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    cursor: none; 
+}
+
+/* --- PRELOADER --- */
+#preloader {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #030305;
+    z-index: 99999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transition: opacity 0.8s cubic-bezier(0.86, 0, 0.07, 1), visibility 0.8s;
+}
+.loader-text {
+    font-size: 3rem;
+    font-weight: 900;
+    letter-spacing: 10px;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--primary);
+    position: relative;
+}
+.loader-text::before {
+    content: "LOADING";
+    position: absolute;
+    left: 0; top: 0;
+    width: 0%;
+    height: 100%;
+    color: var(--primary);
+    overflow: hidden;
+    animation: fillText 2s ease-in-out forwards;
+}
+@keyframes fillText {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}
+
+/* --- CUSTOM CURSOR --- */
+.cursor-dot, .cursor-outline {
+    position: fixed;
+    top: 0; left: 0;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    z-index: 9999;
+    pointer-events: none;
+}
+.cursor-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--primary);
+    box-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary);
+}
+.cursor-outline {
+    width: 40px;
+    height: 40px;
+    border: 2px solid rgba(0, 240, 255, 0.5);
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+    transition: width 0.2s, height 0.2s, background-color 0.2s;
+}
+.cursor-hover {
+    width: 70px;
+    height: 70px;
+    background-color: rgba(255, 0, 60, 0.1);
+    border-color: var(--secondary);
+    box-shadow: 0 0 20px var(--secondary);
+}
+
+/* --- DYNAMIC CANVAS BACKGROUND --- */
+#dynamic-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    z-index: -2; 
+    pointer-events: none;
+    background: radial-gradient(circle at center, #110022 0%, #000000 100%);
+}
+
+/* --- HOLOGRAPHIC TEXT GLOW --- */
+.hologram-text {
+    font-weight: 900;
+    background: linear-gradient(90deg, var(--primary), var(--secondary), var(--tertiary), var(--primary));
+    background-size: 300% 300%;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: hologramShift 4s linear infinite;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+@keyframes hologramShift {
+    0% { background-position: 0% 50%; filter: drop-shadow(0 0 15px rgba(0,240,255,0.4)); }
+    50% { background-position: 100% 50%; filter: drop-shadow(0 0 25px rgba(255,0,60,0.6)); }
+    100% { background-position: 0% 50%; filter: drop-shadow(0 0 15px rgba(0,240,255,0.4)); }
+}
+
+/* --- GLASSMORPHISM CARDS WITH ANIMATED GRADIENT BORDER --- */
+.main-card {
+    background: rgba(10, 10, 15, 0.4) !important;
+    backdrop-filter: blur(20px) saturate(200%);
+    -webkit-backdrop-filter: blur(20px) saturate(200%);
+    border-radius: 30px !important;
+    padding: 40px !important;
+    margin: 50px 0 !important;
+    position: relative;
+    transform-style: preserve-3d;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.8) !important;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+.main-card::before {
+    content: '';
+    position: absolute;
+    top: -2px; left: -2px; right: -2px; bottom: -2px;
+    z-index: -1;
+    border-radius: 32px;
+    background: linear-gradient(45deg, var(--primary), var(--secondary), var(--tertiary), var(--primary));
+    background-size: 400%;
+    animation: borderGlow 6s linear infinite;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+.main-card:hover::before { opacity: 1; }
+@keyframes borderGlow {
+    0% { background-position: 0 0; }
+    50% { background-position: 300% 0; }
+    100% { background-position: 0 0; }
+}
+.main-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 30px;
+    box-shadow: inset 0 0 20px rgba(255,255,255,0.05);
+    pointer-events: none;
+}
+.main-card h1, .main-card h2 { transform: translateZ(60px); }
+.main-card p, .main-card ul { transform: translateZ(40px); color: #cbd5e1; }
+.main-card button { transform: translateZ(50px); }
+.main-card img { transform: translateZ(70px); border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+
+/* --- BUTTONS --- */
+.btn-primary {
+    background: linear-gradient(90deg, var(--tertiary), var(--primary)) !important;
+    border: none !important;
+    padding: 15px 40px !important;
+    border-radius: 50px !important;
+    font-weight: 900 !important;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    box-shadow: 0 10px 30px rgba(112, 0, 255, 0.4) !important;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+    position: relative;
+    overflow: hidden;
+    cursor: none; 
+}
+.btn-primary:hover {
+    box-shadow: 0 20px 40px var(--primary), 0 0 30px var(--tertiary) !important;
+    letter-spacing: 4px;
+}
+
+/* --- NAVBAR --- */
+.navbar {
+    background: rgba(0, 0, 0, 0.5) !important;
+    backdrop-filter: blur(25px);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding: 20px 0 !important;
+}
+.navbar-brand {
+    font-weight: 900;
+    color: var(--primary) !important;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px var(--primary);
+}
+.nav-link {
+    color: #fff !important;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 15px;
+    transition: 0.3s;
+    cursor: none;
+}
+.nav-link:hover {
+    color: var(--secondary) !important;
+    text-shadow: 0 0 15px var(--secondary);
+    transform: translateY(-3px);
+}
+
+/* Form Styles */
+.form-control {
+    background: rgba(255,255,255,0.05) !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+    color: #fff !important;
+    border-radius: 12px !important;
+    padding: 15px !important;
+    margin-bottom: 20px;
+    cursor: none;
+}
+.form-control:focus {
+    background: rgba(255,255,255,0.1) !important;
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.3) !important;
+}

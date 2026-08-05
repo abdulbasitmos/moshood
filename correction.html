@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cars rental</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="./style.css">
+</head>
+<style>
+    .container{
+        background: url(./carrs\ 1.jpg) center/ cover no-repeat;
+        width: 100%;
+        height: 600px;
+    }
+    *{
+        padding: 0%;
+        margin: 0%;
+    
+    }
+    @media (min-width: 768px){
+      .container{
+        flex-direction: row;
+      }
+
+    }
+
+div#header{
+    text-align: center;
+    color: tomato;
+
+}
+#header nav ul{
+    list-style: none;
+    justify-content: right;
+    display: flex;
+    gap: 30px;
+    color: white;
+
+}
+
+#header nav{
+    background-color: rgba(0, 0, 0, 0.623);
+     border: 0.5px solid rgba(255, 0, 0, 0.438);
+}
+#header nav ul a{
+    text-decoration: none;
+    color: white;
+
+}
+.navbar{
+    float: left;
+
+}
+#header nav ul{
+    height: 40px;
+    padding: 30px 10px 10px 10px;
+color: tomato;
+}
+#header nav ul button{
+    background-color: tomato;
+}
+#header nav ul :hover{
+    color: gold;
+    background-color: rgba(26, 1, 1, 0.788);
+    border: 1px solid red;
+    border-radius: 4px;
+
+}
+#button{
+    border-radius: 10px;
+}
+#content{
+    color: white;
+}
+
+
+#p{
+    color: tomato;
+}
+.fa-car{
+    color: blue;
+    font-size: 20px;
+}
+.card{
+    
+display: inline-flex;
+margin: 10px;
+text-align: center;
+
+
+}
+.card h3{
+    text-align: center;
+    color: tomato;
+}
+.main-card{
+    background-color: white;
+    border-radius: 30px;
+    box-shadow: 0px 0px 30px red;
+    margin-top: 40px;
+    height: 150px;
+    margin-left: 10px;
+    margin-right: 10px;
+     transform: scale(1);
+    display:flex;
+
+}
+.main-card:hover{
+  
+}
+  
+#booking{
+background-color: red;
+margin: 20px 0px 0px 20px;
+width: 300px;
+padding-left: 20px;
+border-radius: 30px;
+box-shadow: 20px red;
+float: right;
+margin-right: 20px;
+color: black;
+padding-bottom: 30px;
+border: 5px solid rgba(0, 0, 0, 0.377);
+
+}
+#booking input{
+  color: red;
+  background-color: black;
+
+}
+.images-container{
+  display: inline;
+  
+} 
+#booking input button{
+    width: 500px;
+    color: wheat;
+    background-color: rgba(0, 0, 0, 0.205);
+    border-radius: 20px;
+}
+.main-card2{
+    display: inline;
+    margin-top: 30px;
+    margin-left: 20px;
+  display: flex;
+  gap: 10px;
+  margin-left: 70px;
+    transform: scale(1);
+  transition: transform 0.3s ease;
+}
+.main-card2 h1{
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  color:  rgba(20, 1, 1, 0.349);
+} 
+.main-card2 h3{
+  color: rgb(15, 1, 1);
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+.main-card2:hover {
+border-radius: 300px;
+}
+.card2{
+  padding-left: 50px;
+  justify-content: space-around;
+}
+.fa-globe{
+    color: green;
+    height: 40px;
+}
+.fa-gratipay{
+    color: yellow;
+}
+
+    
+.gallery {
+  display: flex;
+  flex-direction: row;
+  flex-flow: row wrap;
+}
+.card3{
+  display: inline;
+
+}    
+    .popula{
+      display: flex;
+      flex-direction: row;
+    }
+    div#ourcars{
+      display: flex;
+      flex-direction: row;
+      flex-flow: row ;
+      margin-top: 100px;
+      justify-content: space-around;
+      width: 100%;
+
+    }
+div#ourcars img{
+  border-radius: 10px;
+  transform: scale(1);
+
+}
+div#ourcars img :hover{
+  transition: 1.ms;
+}
+div#ourcars .card3{
+  justify-content: space-around ;
+  gap: 70px;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.137);
+  border-radius: 20px;
+  border: 2px solid red;
+  box-shadow: 0px 0px 5px 5px black;
+  flex-wrap: wrap ;
+  
+
+}
+div#ourcars .card3 h2{
+  color: red;
+  text-shadow: 10px black;
+  text-align: right;
+}
+   div#ourcars .card3 button{
+    width: 200px;
+    color: red;
+    background-color: black;
+    border: 2px solid red;
+    height: 30px;
+    border-radius: 10px;
+   } 
+
+   div#ourcars .card3:hover{
+    background-color: red;
+    border: 4px solid blue;
+   }
+    .header4{
+      text-align: center;
+      font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+      color: red;
+      text-shadow: 5px black;
+
+    }
+    .header4 p{
+      color: black;
+    }
+  
+.header4 input{
+  border-radius: 10px;
+  border: 1px solid red;
+  background-color: rgba(0, 0, 0, 0.253);
+  height: 30px;
+  color: red;
+}
+
+
+ header h1 {
+      font-size: 48px;
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    /* Footer Section */
+    footer {
+      background-color: #000;
+      color: red;
+      padding: 40px 20px;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-top: 50px;
+    }
+
+    .footer-column {
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .footer-column h3 {
+      margin-bottom: 15px;
+      color: red;
+    }
+
+    .footer-column ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-column ul li {
+      margin-bottom: 10px;
+    }
+
+    .footer-column ul li a {
+      color: rgb(255, 102, 0);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-column ul li a:hover {
+      color: #fff;
+    }
+
+    .social-icons a {
+      margin-right: 10px;
+      display: inline-block;
+    }
+
+    .social-icons img {
+      
+      
+      
+      
+      
+      
+      
+      width: 30px;
+      height: 30px;
+      filter: brightness(0) invert(1);
+      transition: transform 0.3s;
+    }
+
+    .social-icons img:hover {
+      transform: scale(1.1);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 14px;
+      color: gold;
+    }
+
+  .main-footer{
+    margin-top: 70px;
+    margin-bottom: 0px;
+}
+.fa-facebook{
+color: rgb(215, 247, 35);
+}
+
+
+
+</style>
+<body>
+    <div class="main-container">
+
+<div class="container">
+        <div id="header">
+            <div class="navbar">
+                <h2>Cars.com</h2>
+                  </div>
+                    <nav id="nav">
+                     <ul>
+                       <li><a href="./index.footer.html" >Home</a></li>
+                       <li><a href="#content">About us</a></li>
+                       <li><a href="#ourcars">Our cars</a></li>
+                       <li><a href="#booking">Booking</a></li>
+                       <li><a href="#page">Page</a></li>
+                       <li><a href="#footer">Contact</a></li>
+                       <button id="button">
+                        Rent a car
+                    </button>
+                </ul>
+                
+            </nav>
+          
+            <div id="booking">
+    <h3>pick up date and time </h3>
+    <input type="date" id="date" name="fav-language" > <input type="time" class="time" name="fav-language">
+    <br>
+    <br>
+    <h3>Drop off date</h3>
+    <input type="date" id="date" name="fav-language"><input type="time" class="time" name="fav-language">
+    <br>
+    <h3>Type in your city or airprot </h3>
+    <input type="password" id="password" name="fav-language" placeholder="Type in city or Airport code">
+    <br>
+    <br>
+    <input type="checkbox" name="fav-language" class="checkbox">
+    <label for="checkbox">Return car to another location </label>
+    <br>
+    <br>
+    
+    <h3>Rental start </h3>
+    <input type="text" id="text" name="fav-language"><br>
+    <br>
+    <h3>Rental End </h3>
+    <input type="text" id="text" name="fav-language"><br>
+    <br>
+    <input type="checkbox" name="fav-language" class="checkbox">
+    <label for="checkbox">Diver age at retal start</label>
+ -   <br>
+    <h3>Enter your car choise</h3>
+    <select name="fav-language"  id=" city" >
+
+        <option value="kiv">Kiv</option>
+        <option value="hondal"> Hondal</option>
+        <option value="toyotal"> Toyotal</option>
+        <option value="Ferrari">Ferrari</option>
+        <option value="lexus">Jeep</option>
+        <option value="pagani">Pagani</option>
+        <option value="lexus">Lexus</option>
+        <option value="roll">Rolls-Royce</option>
+        <option value="audi">Audi</option>
+        <br>
+    <br>
+    <br><br>
+    <br>
+    <br>
+    <input type="button" value="Book now">
+    
+        
+    </select>
+    
+</div>  
+             
+        </div>
+        <div id="header"> <!-- Car icon -->
+<h1>YUS MAD cars</h1></div><br>
+<br>
+<br>
+<br>
+<div id="content">
+         <h2>LET FIND A GRAET DEAL OF YOUR RANTAL</h2>
+         <br>
+         <br>
+         <p>one of our top priorities is to adjust each packge we offer to our customers exact needs. <br>We offer avariety of option that can enhance your experience, <br> Always according to your nessities, and help you to get the best </p>
+              <p id="p">we always provide the best</p>
+</div> <br>
+</div>`
+   <div class="main-card">
+<div class="card">
+        <h3>Book Safe and easy</h3> <br>
+        <br>
+        <br>
+        <p>Our smart booking engine searches for <br>for the best price, car category, extras, exclusive <br> offers and discounts suiting your needs. You can <br> securely book online today only with a small downpayment and pay the rest <br> upon your arrival at the desk!</p>
+    </div>
+    <div class="card">
+        <h3>Leading experts</h3><br>
+        <br>
+        <br>
+        <div> <p> provided millions of <br> customers with the best possible guaranteed price <br> for their Car Rental. We welcome you to become our next satisfied  <br>customer.</p> 
+    
+</div>
+<br>
+</div>
+    
+</div>
+<br>
+
+
+
+
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="main-card2">
+<div class="card2">
+      <a href="http://"><i class="fa fa-globe" aria-hidden="true"></i> </a><h3>Global reach</h3><br>
+         <h1>2,000+ SIXT stations in <br> over 105 countries</h1>
+    </div>
+    <div class="card2">
+        <a href="http://"><i class="fa fa-car" aria-hidden="true"></i></a><h3>Distinctive fleet</h3><br>
+          <h1>From high-end  <br>convertibles to premium <br>SUVs</h1>
+    </div>
+    <div class="card2">
+       <a href="http://">  <i class="fa fa-gratipay" aria-hidden="true"></i></a> <h3>Exceptional service</h3><br>
+          <h1>Stress-free, trustworthy <br>, no hidden costs</h1>
+<br>
+</div>
+  </div>
+    
+<br>
+<b
+r>
+<br>
+<br>
+<br>
+<div class="header4">
+    <h1>SOME OF OUR POPULAR CARS </h1>
+<P>Any cars of your choise</P> <br>
+<br>
+<input type="search" id="search" name="fav-language" placeholder="search for more cars">
+</div>
+
+<div id="ourcars">
+    <div class="card3">
+      <img src="./main.webp" alt="Chevrolet"width="200px" height="200px">
+      <div class="name">KIV
+        <h2>$150/days</h2>
+        <button>
+          Book Now
+        </button>
+      </div>
+    </div>
+    <div class="card3">
+      <img src="./cars 6.jpg" alt="Lamborghini"width="200px" height="200px">
+      <div class="name">HONDAL
+        <h2>$200/days </h2>
+        <button>
+          Book Now
+        </button>
+      </div>
+    </div>
+    <div class="card3">
+      <img src="./carrs 1.jpg" alt="Ferrari"width="200px" height="200px">
+      <div class="name">FERRARI SF90
+        <h2> $80/days</h2>
+        <button>
+          Book Now
+        </button>
+      </div>
+    </div>
+    <div class="card3">
+      <img src="./car 2.jpg" alt="Jeep"width="200px" height="200px">
+      <div class="name">Jeep 
+      
+<h2>$40/days</h2>
+<button>
+  Book Now
+
+</button>
+      </div>
+
+</div>
+<div class="card3">
+  <img src="./best of all time.avif" alt="Lexus" width="200px" height="200px">
+  <div class="name">LEXUS
+     <h2>$105/days</h2>
+     <button>
+      Book Now
+     </button>
+  </div>
+  
+</div>
+
+
+    </div>
+
+
+</div>
+  
+  <div class="main-footer">
+    
+  <footer>
+    <div class="footer-container">
+      <div class="footer-column">
+        <h3> Yusmad Cars rental</h3>
+        <p>Drive in style, wherever you go.</p>
+        <div class="social-icons">
+          <a href="http://"><i class="fa fa-facebook-official" aria-hidden="true"></i>Face book</a>
+          <a href="http://"><i class="fa fa-twitter-square" aria-hidden="true"></i>Twitter</a>
+          <a href="http://"><i class="fa fa-youtube-play" aria-hidden="true"></i>Youtube</a>
+          </a>
+        </div>
+      </div>1
+<div id="footer">
+<div class="footer-column">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="/about">About Us</a></li>
+          <li><a href="/cars">Available Cars</a></li>
+          <li><a href="/pricing">Pricing</a></li>
+          <li><a href="">Con/contacttact</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h3>Contact</h3>
+        <p>Email: support@carrentalpro.com</p>
+        <p>Phone: +234 800 123 4567</p>
+        <p>Location: Port Harcourt, Nigeria</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      &copy; 2025 Yusmad CarRental. All rights reserved.
+    </div>
+  </footer>
+  <div id="contavt">
+  
+  </div>
+
+  </div>  
+
+</div>
+      
+
+</body>
+
+  
+</body>
+</html>
+    
+  
+
+
+        
+
+</body>
+</html>
+
+
+
+
+4
